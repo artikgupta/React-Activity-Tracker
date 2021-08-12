@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+}
+
+.cal {
+  display: grid;
+  grid-template-columns: repeat(7, 100px);
+  justify-content: center;
+  place-items: center;
+}
+
+.cal > div {
+  padding: 1rem;
+  /* background: rgb(212, 200, 200); */
+  border: 1px solid gray;
+  max-width: 100%;
+  margin: 5px;
+  border-radius: 3px;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.heading {
+  text-align: center;
+}
+
+.input_box {
+  text-align: center;
+}
+.active {
+  background-color: chocolate;
+}
