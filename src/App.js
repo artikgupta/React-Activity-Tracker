@@ -1,15 +1,15 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import Calender from "./Components/Calender";
+import Calender from './Components/Calender';
 
-import "./style.css";
+import './style.css';
 
 export default class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      inputVal: "",
+      inputVal: '',
       arr: {},
     };
 
@@ -21,7 +21,7 @@ export default class App extends Component {
   }
 
   getLS = () => {
-    let data = localStorage.getItem("secret");
+    let data = localStorage.getItem('secret');
     console.log(data);
     if (!data) return;
     let dataParsed = JSON.parse(data);
@@ -30,7 +30,7 @@ export default class App extends Component {
 
   setLS = () => {
     let dataStringify = JSON.stringify(this.state.arr);
-    let data = localStorage.setItem("secret", dataStringify);
+    let data = localStorage.setItem('secret', dataStringify);
   };
 
   handleChange = (event) => {
@@ -57,28 +57,17 @@ export default class App extends Component {
     if (!this.state.inputVal && !this.state.arr[this.state.inputVal]) return;
     const arrClone = { ...this.state.arr };
     arrClone[this.state.inputVal] = this.createDayArray();
-    console.log(arrClone[this.state.inputVal], "arr");
+    console.log(arrClone[this.state.inputVal], 'arr');
     this.setState(
       {
         arr: arrClone,
-        inputVal: "",
+        inputVal: '',
       },
       this.setLS
     );
   };
 
   handleClear = (key, i) => {
-    // const arr = {
-    //   ...this.state.arr,
-    //   [key]: this.state.arr[key].filter((val, index) => index !== i),
-    // };
-    // console.log(arr);
-    // this.setState((prevState) => ({
-    //   ...prevState,
-    //   arr,
-    // }));
-    // console.log(i);
-
     delete this.state.arr[key];
 
     this.setState(
@@ -90,30 +79,31 @@ export default class App extends Component {
   };
 
   daysInAMonth = () => {
+    console.log(this.date.getMonth());
     switch (this.date.getMonth()) {
+      case 0:
+        return 31;
       case 1:
-        return 31;
-      case 2:
         return 28;
+      case 2:
+        return 31;
       case 3:
-        return 31;
+        return 30;
       case 4:
-        return 30;
-      case 5:
         return 31;
-      case 6:
+      case 5:
         return 30;
+      case 6:
+        return 31;
       case 7:
         return 31;
       case 8:
-        return 31;
+        return 30;
       case 9:
-        return 30;
-      case 10:
         return 31;
-      case 11:
+      case 10:
         return 30;
-      case 12:
+      case 11:
         return 31;
     }
   };
@@ -121,18 +111,18 @@ export default class App extends Component {
   render() {
     var d = new Date();
     var month = new Array();
-    month[0] = "January";
-    month[1] = "February";
-    month[2] = "March";
-    month[3] = "April";
-    month[4] = "May";
-    month[5] = "June";
-    month[6] = "July";
-    month[7] = "August";
-    month[8] = "September";
-    month[9] = "October";
-    month[10] = "November";
-    month[11] = "December";
+    month[0] = 'January';
+    month[1] = 'February';
+    month[2] = 'March';
+    month[3] = 'April';
+    month[4] = 'May';
+    month[5] = 'June';
+    month[6] = 'July';
+    month[7] = 'August';
+    month[8] = 'September';
+    month[9] = 'October';
+    month[10] = 'November';
+    month[11] = 'December';
     var n = month[d.getMonth()];
 
     return (
@@ -141,28 +131,36 @@ export default class App extends Component {
         <div className="input_box">
           <input
             type="text"
-            placeholder="coding"
+            placeholder=" e.g. coding"
             value={this.state.inputVal}
             onChange={this.handleChange}
           ></input>
-          <button onClick={this.activityHandler}>Add Activity</button>
+          <button className="activity_btn" onClick={this.activityHandler}>
+            Add Activity
+          </button>
         </div>
 
         {Object.keys(this.state.arr).map((key, i) => {
           console.log(key);
           return (
-            <div className="flex ">
-              <div>
+            <div className="flex box">
+              <div className="month">
                 <h1>{key}</h1>
                 <p>{n}</p>
               </div>
-              <div>
-                <button onClick={() => this.handleClear(key, i)}>X</button>
-                <Calender
-                  // noOfDays={this.daysInAMonth()}
-                  daysArray={this.state.arr[key]}
-                  handleDayArray={(index) => this.handleDayArray(key, index)}
-                />
+              <div className="flex-70">
+                <div className="parent">
+                  <button
+                    className="child btn"
+                    onClick={() => this.handleClear(key, i)}
+                  >
+                    X
+                  </button>
+                  <Calender
+                    daysArray={this.state.arr[key]}
+                    handleDayArray={(index) => this.handleDayArray(key, index)}
+                  />
+                </div>
               </div>
             </div>
           );
